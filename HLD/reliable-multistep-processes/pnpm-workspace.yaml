@@ -1,0 +1,5 @@
+allowBuilds:
+  '@confluentinc/kafka-javascript': true
+  '@swc/core': true
+  esbuild: true
+  protobufjs: true

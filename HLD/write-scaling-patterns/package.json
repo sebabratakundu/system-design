@@ -1,0 +1,30 @@
+{
+  "name": "write-scaling-patterns",
+  "version": "1.0.0",
+  "description": "Production Write Scaling System Design Patterns in TypeScript",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "tsx src/index.ts",
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "pattern-1": "tsx src/patterns/1-vertical-scaling-db-tuning.ts",
+    "pattern-2": "tsx src/patterns/2-sharding-hotkey-partitioning.ts",
+    "pattern-3": "tsx src/patterns/3-write-queues-load-shedding.ts",
+    "pattern-4": "tsx src/patterns/4-batching-hierarchical-aggregation.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "better-sqlite3": "^11.8.0",
+    "ioredis": "^5.4.2",
+    "lru-cache": "^11.0.2"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.12",
+    "@types/node": "^22.10.1",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}

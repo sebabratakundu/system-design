@@ -1,0 +1,28 @@
+{
+  "name": "reliable-multistep-processes",
+  "version": "1.0.0",
+  "description": "Production-grade code examples for reliable multi-step process patterns in distributed systems",
+  "type": "module",
+  "scripts": {
+    "demo:pattern1": "npx tsx --env-file=.env src/pattern1-db-statemachine/index.ts",
+    "demo:pattern2": "npx tsx --env-file=.env src/pattern2-kafka-choreography/index.ts",
+    "demo:pattern3": "npx tsx --env-file=.env src/pattern3-temporal-durable/index.ts",
+    "demo:pattern4": "npx tsx --env-file=.env src/pattern4-step-functions/index.ts",
+    "demo:all": "npm run demo:pattern1 && npm run demo:pattern2 && npm run demo:pattern3 && npm run demo:pattern4"
+  },
+  "dependencies": {
+    "@confluentinc/kafka-javascript": "^1.10.0",
+    "@temporalio/activity": "^1.20.3",
+    "@temporalio/client": "^1.20.3",
+    "@temporalio/common": "^1.20.3",
+    "@temporalio/worker": "^1.20.3",
+    "@temporalio/workflow": "^1.20.3",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@temporalio/testing": "^1.20.3",
+    "@types/node": "^20.11.0",
+    "tsx": "^4.7.1",
+    "typescript": "^5.4.0"
+  }
+}

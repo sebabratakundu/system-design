@@ -1,0 +1,78 @@
+{
+  "Comment": "Production E-Commerce Order Fulfillment Workflow with Saga Compensation",
+  "StartAt": "ChargePayment",
+  "States": {
+    "ChargePayment": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-east-1:123456789012:function:chargePaymentLambda",
+      "ResultPath": "$.paymentResult",
+      "Retry": [
+        {
+          "ErrorEquals": ["Lambda.ServiceException", "Lambda.SdkClientException"],
+          "IntervalSeconds": 1,
+          "MaxAttempts": 3,
+          "BackoffRate": 2.0
+        }
+      ],
+      "Next": "ReserveInventory",
+      "Catch": [
+        {
+          "ErrorEquals": ["States.ALL"],
+          "Next": "OrderFailed"
+        }
+      ]
+    },
+    "ReserveInventory": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-east-1:123456789012:function:reserveInventoryLambda",
+      "ResultPath": "$.inventoryResult",
+      "Retry": [
+        {
+          "ErrorEquals": ["Lambda.ServiceException"],
+          "IntervalSeconds": 1,
+          "MaxAttempts": 3,
+          "BackoffRate": 2.0
+        }
+      ],
+      "Next": "CreateShippingLabel",
+      "Catch": [
+        {
+          "ErrorEquals": ["States.ALL"],
+          "Next": "RefundPayment"
+        }
+      ]
+    },
+    "CreateShippingLabel": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-east-1:123456789012:function:createShippingLabelLambda",
+      "ResultPath": "$.shippingResult",
+      "Next": "SendConfirmationEmail",
+      "Catch": [
+        {
+          "ErrorEquals": ["States.ALL"],
+          "Next": "ReleaseInventoryAndRefund"
+        }
+      ]
+    },
+    "SendConfirmationEmail": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-east-1:123456789012:function:sendConfirmationEmailLambda",
+      "ResultPath": "$.emailResult",
+      "End": true
+    },
+    "ReleaseInventoryAndRefund": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-east-1:123456789012:function:releaseInventoryLambda",
+      "Next": "RefundPayment"
+    },
+    "RefundPayment": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-east-1:123456789012:function:refundPaymentLambda",
+      "Next": "OrderFailed"
+    },
+    "OrderFailed": {
+      "Type": "Fail",
+      "Cause": "Order fulfillment failed and compensations were executed."
+    }
+  }
+}
