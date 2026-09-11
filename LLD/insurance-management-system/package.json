@@ -1,0 +1,29 @@
+{
+  "name": "insurance-management-system-lld",
+  "version": "1.0.0",
+  "description": "Production-grade Low-Level Design (LLD) and Reference Implementation for Insurance Management System",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "tsx src/index.ts",
+    "start": "tsx src/index.ts",
+    "build": "tsc"
+  },
+  "keywords": [
+    "system-design",
+    "lld",
+    "insurance",
+    "double-entry-ledger",
+    "state-pattern",
+    "saga-pattern"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "lru-cache": "^11.0.2"
+  }
+}
